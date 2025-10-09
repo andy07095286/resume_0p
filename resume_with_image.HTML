@@ -2,16 +2,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>趙氏花的履歷表</title>
+<title>趙氏花的華麗履歷表</title>
 <style>
-  /* ----------------------- 全域（修復滑鼠顯示） ----------------------- */
+  /* ----------------------- 全局 ----------------------- */
   body, html {
     margin: 0;
     padding: 0;
     font-family: "Microsoft JhengHei", Arial, sans-serif;
     background: linear-gradient(135deg, #a8edea, #fed6e3);
     overflow-x: hidden;
-    /* 移除 cursor: none; 後滑鼠可正常顯示 */
+    cursor: none;
   }
   /* ----------------------- 粒子背景 ----------------------- */
   .particle, .snake-tail {
@@ -47,7 +47,7 @@
   @keyframes fadeInContainer {
     to {opacity:1; transform:translateY(0);}
   }
-  /* ----------------------- 左側（已嵌入照片） ----------------------- */
+  /* ----------------------- 左側 ----------------------- */
   .left-side {
     flex: 1;
     min-width: 280px;
@@ -57,11 +57,10 @@
     text-align: center;
     position: relative;
   }
-  /* 已替換為你的照片URL */
   .left-side img {
     width: 150px; height: 150px;
     border-radius: 50%;
-    object-fit: cover; 
+    object-fit: cover;
     margin-bottom: 20px;
     border: 4px solid white;
     transition: transform 0.5s, box-shadow 0.3s;
@@ -164,8 +163,8 @@
   /* ----------------------- 小蛇 ----------------------- */
   .snake-cursor {
     position: fixed;
-    width: 35px;
-    height: 35px;
+    width: 50px;
+    height: 50px;
     pointer-events: none;
     background-image: url('https://media.giphy.com/media/3o7abldj0tZtFjZ7rm/giphy.gif');
     background-size: cover;
@@ -175,16 +174,17 @@
 </style>
 </head>
 <body>
+
 <!-- PDF 下載 -->
 <div style="text-align:center;">
   <button class="download-btn" onclick="downloadPDF()">下載 PDF 履歷表</button>
 </div>
+
 <div id="resumeContent" class="resume-container">
   <!-- 左側 -->
   <div class="left-side">
-    <!-- 已替換為你的照片URL -->
-    <img src="https://i.imgur.com/6Xz9Y7L.jpg" alt="趙氏花">
-    <h1>趙氏花的履歷表</h1>
+    <img src="https://lurl.cc/zLsaH" alt="趙氏花">
+    <h1>趙氏花</h1>
     <p>亞洲大學</p>
     <p>健康產業管理系</p>
     <p>學號：U114011116</p>
@@ -224,16 +224,20 @@
     </section>
   </div>
 </div>
+
 <footer>
   <p>© 2025 趙氏花. All Rights Reserved.</p>
 </footer>
+
 <div class="snake-cursor" id="snake"></div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script>
   // 區塊折疊
   function toggleContent(header){
     header.classList.toggle('active');
   }
+
   // 滾動淡入
   function showOnScroll(){
     const sections = document.querySelectorAll('section');
@@ -249,9 +253,9 @@
   }
   window.addEventListener('scroll', showOnScroll);
   window.addEventListener('load', showOnScroll);
+
   // PDF 下載
   function downloadPDF(){
-    document.querySelectorAll('.particle, .snake-cursor').forEach(el=>el.style.display='none');
     const element = document.getElementById('resumeContent');
     html2pdf().set({
       margin:0.5, 
@@ -259,38 +263,38 @@
       image:{type:'jpeg', quality:0.98}, 
       html2canvas:{scale:2}, 
       jsPDF:{unit:'in', format:'a4', orientation:'portrait'}
-    }).from(element).save().finally(()=>{
-      document.querySelectorAll('.particle, .snake-cursor').forEach(el=>el.style.display='block');
-    });
+    }).from(element).save();
   }
+
   // 小蛇跟隨滑鼠
   const snake = document.getElementById('snake');
   document.addEventListener('mousemove', e=>{
     snake.style.transform=`translate(${e.clientX}px,${e.clientY}px)`;
     createTail(e.clientX, e.clientY);
   });
+
   // 小尾巴粒子
   function createTail(x,y){
     const tail = document.createElement('div');
     tail.className='snake-tail';
-    tail.style.width = tail.style.height = (Math.random()*6+4)+'px';
-    tail.style.background='rgba(255,255,0,0.5)';
+    tail.style.width=tail.style.height=(Math.random()*10+5)+'px';
+    tail.style.background='rgba(255,255,0,0.7)';
     tail.style.top=y+'px';
     tail.style.left=x+'px';
     document.body.appendChild(tail);
-    setTimeout(()=>tail.remove(),400);
+    setTimeout(()=>tail.remove(),500);
   }
+
   // 粒子背景生成
-  for(let i=0;i<50;i++){
+  for(let i=0;i<80;i++){
     const p = document.createElement('div');
     p.className='particle';
     p.style.top=Math.random()*window.innerHeight+'px';
     p.style.left=Math.random()*window.innerWidth+'px';
-    const size = Math.random()*5+3;
-    p.style.width = p.style.height = size+'px';
-    p.style.background = `rgba(255,255,255,${Math.random()*0.5+0.3})`;
+    p.style.width=p.style.height=(Math.random()*6+4)+'px';
     document.body.appendChild(p);
   }
 </script>
 </body>
 </html>
+resume_with_image.HTML
