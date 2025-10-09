@@ -1,10 +1,11 @@
+<!DOCTYPE html>
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>趙氏花 履歷表 | 自我介紹與專長展示</title>
 <style>
-  /* ----------------------- 全域（滑鼠正常顯示） ----------------------- */
+  /* ----------------------- 全域 ----------------------- */
   body, html {
     margin: 0;
     padding: 0;
@@ -46,7 +47,7 @@
   @keyframes fadeInContainer {
     to {opacity:1; transform:translateY(0);}
   }
-  /* ----------------------- 左側資訊區 ----------------------- */
+  /* ----------------------- 左側資訊 ----------------------- */
   .left-side {
     flex: 1;
     min-width: 280px;
@@ -73,7 +74,7 @@
     from {opacity:0; transform: translateY(20px);}
     to {opacity:1; transform: translateY(0);}
   }
-  /* ----------------------- 右側內容區（含自我介紹與照片） ----------------------- */
+  /* ----------------------- 右側內容 ----------------------- */
   .right-side {
     flex: 2;
     min-width: 500px;
@@ -146,7 +147,7 @@
     .resume-container {flex-direction:column;}
     .left-side,.right-side{min-width:100%;}
   }
-  /* ----------------------- 自我介紹模塊（含照片） ----------------------- */
+  /* ----------------------- 自我介紹模塊 ----------------------- */
   .intro-section {
     display: flex;
     align-items: flex-start;
@@ -182,6 +183,7 @@
 <div style="text-align:center;">
   <button class="download-btn" onclick="downloadPDF()">下載 PDF 履歷表</button>
 </div>
+
 <div id="resumeContent" class="resume-container">
   <!-- 左側基本資訊 -->
   <div class="left-side">
@@ -190,14 +192,15 @@
     <p>學號：U114011116</p>
     <p>📍 台中市，台灣</p>
   </div>
+
   <!-- 右側詳細內容 -->
   <div class="right-side">
     <section>
       <h2 onclick="toggleContent(this)">👋 自我介紹</h2>
       <div class="content">
         <div class="intro-section">
-          <!-- 自我介紹區塊嵌入照片 -->
-          <img src="https://i.imgur.com/6Xz9Y7L.jpg" alt="趙氏花 個人形象照" class="intro-photo">
+          
+          <img src="https://i.imgur.com/bix2C6A.jpeg" alt="趙氏花 個人形象照" class="intro-photo">
           <div class="intro-text">
             <p>您好！我是趙氏花，就讀於亞洲大學健康產業管理系，預計2028年畢業。</p>
             <p>我熱愛健康產業領域，同時對廚藝、舞蹈充滿熱情，具備良好的團隊合作能力與學習動力，期待在健康管理、活動策劃等領域發揮所長。</p>
@@ -206,12 +209,14 @@
         </div>
       </div>
     </section>
+
     <section>
       <h2 onclick="toggleContent(this)">🎓 學歷背景</h2>
       <div class="content">
         <p>亞洲大學 | 健康管理學士（預計2028年畢業）</p>
       </div>
     </section>
+
     <section>
       <h2 onclick="toggleContent(this)">💡 技能專長</h2>
       <div class="content">
@@ -222,6 +227,7 @@
         </ul>
       </div>
     </section>
+
     <section>
       <h2 onclick="toggleContent(this)">🎶 興趣愛好</h2>
       <div class="content">
@@ -238,17 +244,19 @@
     </section>
   </div>
 </div>
+
 <footer>
   <p>© 2025 趙氏花. All Rights Reserved.</p>
 </footer>
+
 <div class="snake-cursor" id="snake"></div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script>
-  // 區塊折疊
   function toggleContent(header){
     header.classList.toggle('active');
   }
-  // 滾動淡入
+
   function showOnScroll(){
     const sections = document.querySelectorAll('section');
     const trigger = window.innerHeight * 0.85;
@@ -263,7 +271,7 @@
   }
   window.addEventListener('scroll', showOnScroll);
   window.addEventListener('load', showOnScroll);
-  // PDF 下載
+
   function downloadPDF(){
     document.querySelectorAll('.particle, .snake-cursor').forEach(el=>el.style.display='none');
     const element = document.getElementById('resumeContent');
@@ -277,13 +285,13 @@
       document.querySelectorAll('.particle, .snake-cursor').forEach(el=>el.style.display='block');
     });
   }
-  // 小蛇跟隨滑鼠
+
   const snake = document.getElementById('snake');
   document.addEventListener('mousemove', e=>{
     snake.style.transform=`translate(${e.clientX}px,${e.clientY}px)`;
     createTail(e.clientX, e.clientY);
   });
-  // 小尾巴粒子
+
   function createTail(x,y){
     const tail = document.createElement('div');
     tail.className='snake-tail';
@@ -294,7 +302,7 @@
     document.body.appendChild(tail);
     setTimeout(()=>tail.remove(),400);
   }
-  // 粒子背景生成
+
   for(let i=0;i<50;i++){
     const p = document.createElement('div');
     p.className='particle';
