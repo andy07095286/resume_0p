@@ -2,16 +2,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>趙氏花的華麗履歷表</title>
+<title>趙氏花 履歷表 | 自我介紹與專長展示</title>
 <style>
-  /* ----------------------- 全局 ----------------------- */
+  /* ----------------------- 全域（滑鼠正常顯示） ----------------------- */
   body, html {
     margin: 0;
     padding: 0;
     font-family: "Microsoft JhengHei", Arial, sans-serif;
     background: linear-gradient(135deg, #a8edea, #fed6e3);
     overflow-x: hidden;
-    cursor: none;
   }
   /* ----------------------- 粒子背景 ----------------------- */
   .particle, .snake-tail {
@@ -47,7 +46,7 @@
   @keyframes fadeInContainer {
     to {opacity:1; transform:translateY(0);}
   }
-  /* ----------------------- 左側 ----------------------- */
+  /* ----------------------- 左側資訊區 ----------------------- */
   .left-side {
     flex: 1;
     min-width: 280px;
@@ -56,18 +55,6 @@
     padding: 50px 20px;
     text-align: center;
     position: relative;
-  }
-  .left-side img {
-    width: 150px; height: 150px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: 20px;
-    border: 4px solid white;
-    transition: transform 0.5s, box-shadow 0.3s;
-  }
-  .left-side img:hover {
-    transform: scale(1.2) rotate(-10deg);
-    box-shadow: 0 0 20px rgba(255,255,255,0.7);
   }
   .left-side h1 {
     font-size: 2em;
@@ -86,7 +73,7 @@
     from {opacity:0; transform: translateY(20px);}
     to {opacity:1; transform: translateY(0);}
   }
-  /* ----------------------- 右側 ----------------------- */
+  /* ----------------------- 右側內容區（含自我介紹與照片） ----------------------- */
   .right-side {
     flex: 2;
     min-width: 500px;
@@ -158,13 +145,30 @@
   @media(max-width:800px) {
     .resume-container {flex-direction:column;}
     .left-side,.right-side{min-width:100%;}
-    .left-side img{width:120px;height:120px;}
+  }
+  /* ----------------------- 自我介紹模塊（含照片） ----------------------- */
+  .intro-section {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  .intro-photo {
+    width: 180px;
+    height: 180px;
+    border-radius: 12px;
+    object-fit: cover;
+    border: 3px solid #4caf50;
+    transition: transform 0.5s;
+  }
+  .intro-photo:hover {transform: scale(1.05) rotate(2deg);}
+  .intro-text {
+    flex: 1;
   }
   /* ----------------------- 小蛇 ----------------------- */
   .snake-cursor {
     position: fixed;
-    width: 50px;
-    height: 50px;
+    width: 35px;
+    height: 35px;
     pointer-events: none;
     background-image: url('https://media.giphy.com/media/3o7abldj0tZtFjZ7rm/giphy.gif');
     background-size: cover;
@@ -174,24 +178,34 @@
 </style>
 </head>
 <body>
-
 <!-- PDF 下載 -->
 <div style="text-align:center;">
   <button class="download-btn" onclick="downloadPDF()">下載 PDF 履歷表</button>
 </div>
-
 <div id="resumeContent" class="resume-container">
-  <!-- 左側 -->
+  <!-- 左側基本資訊 -->
   <div class="left-side">
-    <img src="https://lurl.cc/zLsaH" alt="趙氏花">
     <h1>趙氏花</h1>
-    <p>亞洲大學</p>
-    <p>健康產業管理系</p>
+    <p>亞洲大學 健康產業管理系</p>
     <p>學號：U114011116</p>
     <p>📍 台中市，台灣</p>
   </div>
-  <!-- 右側 -->
+  <!-- 右側詳細內容 -->
   <div class="right-side">
+    <section>
+      <h2 onclick="toggleContent(this)">👋 自我介紹</h2>
+      <div class="content">
+        <div class="intro-section">
+          <!-- 自我介紹區塊嵌入照片 -->
+          <img src="https://i.imgur.com/6Xz9Y7L.jpg" alt="趙氏花 個人形象照" class="intro-photo">
+          <div class="intro-text">
+            <p>您好！我是趙氏花，就讀於亞洲大學健康產業管理系，預計2028年畢業。</p>
+            <p>我熱愛健康產業領域，同時對廚藝、舞蹈充滿熱情，具備良好的團隊合作能力與學習動力，期待在健康管理、活動策劃等領域發揮所長。</p>
+            <p>閒暇時我喜歡探索新菜式、參與舞蹈表演，也熱衷於透過實踐提升自身技能，歡迎您進一步了解我的經歷！</p>
+          </div>
+        </div>
+      </div>
+    </section>
     <section>
       <h2 onclick="toggleContent(this)">🎓 學歷背景</h2>
       <div class="content">
@@ -224,20 +238,16 @@
     </section>
   </div>
 </div>
-
 <footer>
   <p>© 2025 趙氏花. All Rights Reserved.</p>
 </footer>
-
 <div class="snake-cursor" id="snake"></div>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script>
   // 區塊折疊
   function toggleContent(header){
     header.classList.toggle('active');
   }
-
   // 滾動淡入
   function showOnScroll(){
     const sections = document.querySelectorAll('section');
@@ -253,9 +263,9 @@
   }
   window.addEventListener('scroll', showOnScroll);
   window.addEventListener('load', showOnScroll);
-
   // PDF 下載
   function downloadPDF(){
+    document.querySelectorAll('.particle, .snake-cursor').forEach(el=>el.style.display='none');
     const element = document.getElementById('resumeContent');
     html2pdf().set({
       margin:0.5, 
@@ -263,38 +273,38 @@
       image:{type:'jpeg', quality:0.98}, 
       html2canvas:{scale:2}, 
       jsPDF:{unit:'in', format:'a4', orientation:'portrait'}
-    }).from(element).save();
+    }).from(element).save().finally(()=>{
+      document.querySelectorAll('.particle, .snake-cursor').forEach(el=>el.style.display='block');
+    });
   }
-
   // 小蛇跟隨滑鼠
   const snake = document.getElementById('snake');
   document.addEventListener('mousemove', e=>{
     snake.style.transform=`translate(${e.clientX}px,${e.clientY}px)`;
     createTail(e.clientX, e.clientY);
   });
-
   // 小尾巴粒子
   function createTail(x,y){
     const tail = document.createElement('div');
     tail.className='snake-tail';
-    tail.style.width=tail.style.height=(Math.random()*10+5)+'px';
-    tail.style.background='rgba(255,255,0,0.7)';
+    tail.style.width = tail.style.height = (Math.random()*6+4)+'px';
+    tail.style.background='rgba(255,255,0,0.5)';
     tail.style.top=y+'px';
     tail.style.left=x+'px';
     document.body.appendChild(tail);
-    setTimeout(()=>tail.remove(),500);
+    setTimeout(()=>tail.remove(),400);
   }
-
   // 粒子背景生成
-  for(let i=0;i<80;i++){
+  for(let i=0;i<50;i++){
     const p = document.createElement('div');
     p.className='particle';
     p.style.top=Math.random()*window.innerHeight+'px';
     p.style.left=Math.random()*window.innerWidth+'px';
-    p.style.width=p.style.height=(Math.random()*6+4)+'px';
+    const size = Math.random()*5+3;
+    p.style.width = p.style.height = size+'px';
+    p.style.background = `rgba(255,255,255,${Math.random()*0.5+0.3})`;
     document.body.appendChild(p);
   }
 </script>
 </body>
 </html>
-resume_with_image.HTML
