@@ -5,205 +5,241 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>趙氏花 履歷表 | 自我介紹與專長展示</title>
 <style>
-  /* ----------------------- 全域 ----------------------- */
-  body, html {
-    margin: 0;
-    padding: 0;
-    font-family: "Microsoft JhengHei", Arial, sans-serif;
-    background: linear-gradient(135deg, #a8edea, #fed6e3);
-    overflow-x: hidden;
-  }
-  /* ----------------------- 粒子背景 ----------------------- */
-  .particle, .snake-tail, .heart {
-    position: absolute;
-    border-radius: 50%;
-    pointer-events: none;
-  }
-  .particle {
-    width: 5px; height: 5px;
-    background: rgba(255,255,255,0.7);
-    animation: float 20s linear infinite;
-  }
-  @keyframes float {
-    0% {transform: translateY(0) translateX(0);}
-    100% {transform: translateY(-1200px) translateX(1200px);}
-  }
-  /* ----------------------- 容器 ----------------------- */
-  .resume-container {
-    display: flex;
-    flex-wrap: wrap;
-    max-width: 1000px;
-    margin: 60px auto;
-    background: rgba(255,255,255,0.95);
-    border-radius: 16px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
-    overflow: hidden;
-    position: relative;
-    z-index: 1;
-    transform: translateY(-50px);
-    opacity: 0;
-    animation: fadeInContainer 1s forwards;
-  }
-  @keyframes fadeInContainer {
-    to {opacity:1; transform:translateY(0);}
-  }
-  /* ----------------------- 左側資訊 ----------------------- */
-  .left-side {
-    flex: 1;
-    min-width: 280px;
-    background: linear-gradient(180deg, #ff9a9e, #fad0c4, #a18cd1);
-    color: white;
-    padding: 50px 20px;
-    text-align: center;
-    position: relative;
-  }
-  .left-side h1 {
-    font-size: 2em;
-    margin: 10px 0;
-    text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
-    background: linear-gradient(45deg, #fbc2eb, #a6c1ee, #fccb90, #d9a7c7);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: textSlide 1s ease forwards;
-    opacity: 0;
-  }
-  .left-side p {
-    margin: 5px 0;
-    font-weight: bold;
-    background: linear-gradient(45deg, #fbc2eb, #a6c1ee, #fccb90, #d9a7c7);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    opacity: 0;
-    animation: textSlide 1s ease forwards;
-    animation-delay: 0.3s;
-  }
-  @keyframes textSlide {
-    from {opacity:0; transform: translateY(20px);}
-    to {opacity:1; transform: translateY(0);}
-  }
-  /* ----------------------- 右側內容 ----------------------- */
-  .right-side {
-    flex: 2;
-    min-width: 500px;
-    padding: 40px;
-  }
-  section {
-    background: #fff;
-    border-radius: 14px;
-    padding: 25px;
-    margin-bottom: 25px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    transition: transform 0.6s, opacity 0.6s;
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  section.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  section h2 {
-    font-size: 1.6em;
-    margin-bottom: 15px;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: linear-gradient(45deg, #ff9a9e, #fad0c4, #a18cd1, #fbc2eb, #a6c1ee);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    transition: text-shadow 0.3s;
-  }
-  section h2:hover {text-shadow: 0 0 10px #ff6f91;}
-  section h2::after {
-    content: "▼";
-    font-size: 0.9em;
-    transition: transform 0.3s;
-  }
-  section h2.active::after {transform: rotate(-180deg);}
-  ul {padding-left:20px;margin:0;}
-  ul li {
-    padding: 10px 12px;
-    margin-bottom:8px;
-    border-radius:10px;
-    font-size:1.05em;
-    background:#f7f7f7;
-    transition: all 0.3s ease, box-shadow 0.3s;
-    opacity:0;
-    background: linear-gradient(45deg, #ff9a9e, #fad0c4, #a18cd1, #fbc2eb, #a6c1ee);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-  ul li.visible {
-    animation: liFade 0.6s forwards, liGlow 0.4s 1;
-  }
-  @keyframes liFade {0%{opacity:0; transform:translateY(15px);} 100%{opacity:1; transform:translateY(0);}}
-  @keyframes liGlow {0%,100%{box-shadow:0 0 0px #fff;}50%{box-shadow:0 0 15px #ffd700;}}
-  ul li:hover {transform: scale(1.08) rotate(1deg); color:#e65100; box-shadow:0 0 10px #ffd700;}
-  ul li img {display:block;margin-top:6px;border-radius:8px; transition:transform 0.3s;}
-  ul li img:hover {transform: scale(1.2) rotate(5deg);}
-  .download-btn {
-    display:inline-block;
-    margin:20px 0 30px 0;
-    padding:12px 25px;
-    background:#ff9a9e;
-    color:white;
-    font-size:1.1em;
-    border:none;
-    border-radius:10px;
-    cursor:pointer;
-    transition: all 0.3s;
-  }
-  .download-btn:hover {background:#d16ba5; box-shadow:0 0 15px rgba(0,0,0,0.3);}
-  footer {text-align:center; padding:20px; background:#333; color:white; margin-top:50px;}
-  @media(max-width:800px) {
-    .resume-container {flex-direction:column;}
-    .left-side,.right-side{min-width:100%;}
-  }
-  /* ----------------------- 自我介紹模塊 ----------------------- */
-  .intro-section {
-    display: flex;
-    align-items: flex-start;
-    gap: 20px;
-  }
-  .intro-photo {
-    width: 180px;
-    height: 180px;
-    border-radius: 12px;
-    object-fit: cover;
-    border: 3px solid #ff9a9e;
-    transition: transform 0.5s;
-  }
-  .intro-photo:hover {transform: scale(1.05) rotate(2deg);}
-  .intro-text {flex:1;}
-  /* ----------------------- 小蛇 ----------------------- */
-  .snake-cursor {
-    position: fixed;
-    width: 35px;
-    height: 35px;
-    pointer-events: none;
-    background-image: url('https://media.giphy.com/media/3o7abldj0tZtFjZ7rm/giphy.gif');
-    background-size: cover;
-    z-index:9999;
-    transform: translate(-50%,-50%);
-  }
-  /* ----------------------- 音樂按鈕 ----------------------- */
-  .music-btn {
-    position: fixed;
-    top: 15px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 9999;
-    padding: 10px 20px;
-    border-radius: 50px;
-    background: linear-gradient(45deg,#ff9a9e,#fad0c4,#a18cd1,#fbc2eb);
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 0 15px rgba(0,0,0,0.3);
-  }
+/* ----------------------- 全域 ----------------------- */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: "Microsoft JhengHei", Arial, sans-serif;
+  background: linear-gradient(135deg, #a8edea, #fed6e3);
+  overflow-x: hidden;
+}
+
+/* ----------------------- 粒子背景 ----------------------- */
+.particle, .snake-tail, .heart {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.particle {
+  width: 5px; height: 5px;
+  background: rgba(255,255,255,0.7);
+  animation: float 20s linear infinite;
+}
+
+@keyframes float {
+  0% {transform: translateY(0) translateX(0);}
+  100% {transform: translateY(-1200px) translateX(1200px);}
+}
+
+/* ----------------------- 愛心背景 ----------------------- */
+.heart {
+  width: 15px;
+  height: 15px;
+  background-color: #ff6b81;
+  clip-path: polygon(
+    50% 0%, 
+    61% 13%, 
+    75% 13%, 
+    88% 25%, 
+    88% 38%, 
+    75% 50%, 
+    50% 75%, 
+    25% 50%, 
+    12% 38%, 
+    12% 25%, 
+    25% 13%, 
+    39% 13%
+  );
+  opacity: 0.8;
+  animation: floatHeart linear infinite;
+}
+
+@keyframes floatHeart {
+  0% {transform: translateY(0) scale(0.5); opacity:0.8;}
+  50% {opacity:1;}
+  100% {transform: translateY(-1000px) scale(1.2); opacity:0;}
+}
+
+/* ----------------------- 容器 ----------------------- */
+.resume-container {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 1000px;
+  margin: 60px auto;
+  background: rgba(255,255,255,0.95);
+  border-radius: 16px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+  transform: translateY(-50px);
+  opacity: 0;
+  animation: fadeInContainer 1s forwards;
+}
+
+@keyframes fadeInContainer {
+  to {opacity:1; transform:translateY(0);}
+}
+
+/* ----------------------- 左側資訊 ----------------------- */
+.left-side {
+  flex: 1;
+  min-width: 280px;
+  background: linear-gradient(180deg, #ff9a9e, #fad0c4, #a18cd1);
+  color: white;
+  padding: 50px 20px;
+  text-align: center;
+  position: relative;
+}
+.left-side h1 {
+  font-size: 2em;
+  margin: 10px 0;
+  text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+  color: white;
+  opacity: 0;
+  animation: textSlide 1s ease forwards;
+}
+.left-side p {
+  margin: 5px 0;
+  font-weight: bold;
+  color: white;
+  opacity: 0;
+  animation: textSlide 1s ease forwards;
+  animation-delay: 0.3s;
+}
+
+@keyframes textSlide {
+  from {opacity:0; transform: translateY(20px);}
+  to {opacity:1; transform: translateY(0);}
+}
+
+/* ----------------------- 右側內容 ----------------------- */
+.right-side {
+  flex: 2;
+  min-width: 500px;
+  padding: 40px;
+}
+section {
+  background: #fff;
+  border-radius: 14px;
+  padding: 25px;
+  margin-bottom: 25px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  transition: transform 0.6s, opacity 0.6s;
+  opacity: 0;
+  transform: translateY(40px);
+}
+section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+section h2 {
+  font-size: 1.6em;
+  margin-bottom: 15px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #333;
+  transition: text-shadow 0.3s;
+}
+section h2:hover {text-shadow: 0 0 10px #ff6f91;}
+section h2::after {
+  content: "▼";
+  font-size: 0.9em;
+  transition: transform 0.3s;
+}
+section h2.active::after {transform: rotate(-180deg);}
+ul {padding-left:20px;margin:0;}
+ul li {
+  padding: 10px 12px;
+  margin-bottom:8px;
+  border-radius:10px;
+  font-size:1.05em;
+  background:#f7f7f7;
+  transition: all 0.3s ease, box-shadow 0.3s;
+  opacity:0;
+  color: #333;
+}
+ul li.visible {
+  animation: liFade 0.6s forwards, liGlow 0.4s 1;
+}
+@keyframes liFade {0%{opacity:0; transform:translateY(15px);} 100%{opacity:1; transform:translateY(0);}}
+@keyframes liGlow {0%,100%{box-shadow:0 0 0px #fff;}50%{box-shadow:0 0 15px #ffd700;}}
+ul li:hover {transform: scale(1.08) rotate(1deg); box-shadow:0 0 10px #ffd700;}
+ul li img {display:block;margin-top:6px;border-radius:8px; transition:transform 0.3s;}
+ul li img:hover {transform: scale(1.2) rotate(5deg);}
+
+/* ----------------------- 按鈕 ----------------------- */
+.download-btn {
+  display:inline-block;
+  margin:20px 0 30px 0;
+  padding:12px 25px;
+  background:#ff9a9e;
+  color:white;
+  font-size:1.1em;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  transition: all 0.3s;
+}
+.download-btn:hover {background:#d16ba5; box-shadow:0 0 15px rgba(0,0,0,0.3);}
+footer {text-align:center; padding:20px; background:#333; color:white; margin-top:50px;}
+
+@media(max-width:800px) {
+  .resume-container {flex-direction:column;}
+  .left-side,.right-side{min-width:100%;}
+}
+
+/* ----------------------- 自我介紹模塊 ----------------------- */
+.intro-section {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+}
+.intro-photo {
+  width: 180px;
+  height: 180px;
+  border-radius: 12px;
+  object-fit: cover;
+  border: 3px solid #ff9a9e;
+  transition: transform 0.5s;
+}
+.intro-photo:hover {transform: scale(1.05) rotate(2deg);}
+.intro-text {flex:1;}
+
+/* ----------------------- 小蛇 ----------------------- */
+.snake-cursor {
+  position: fixed;
+  width: 35px;
+  height: 35px;
+  pointer-events: none;
+  background-image: url('https://media.giphy.com/media/3o7abldj0tZtFjZ7rm/giphy.gif');
+  background-size: cover;
+  z-index:9999;
+  transform: translate(-50%,-50%);
+}
+
+/* ----------------------- 音樂按鈕 ----------------------- */
+.music-btn {
+  position: fixed;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  padding: 10px 20px;
+  border-radius: 50px;
+  background: linear-gradient(45deg,#ff9a9e,#fad0c4,#a18cd1,#fbc2eb);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+}
 </style>
 </head>
 <body>
+
 <!-- 音樂按鈕 -->
 <div class="music-btn" id="musicBtn">🎵 播放音樂</div>
 <audio id="bgMusic" loop>
@@ -316,89 +352,106 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script>
-  function toggleContent(header){
-    header.classList.toggle('active');
-  }
+function toggleContent(header){
+  header.classList.toggle('active');
+}
 
-  function showOnScroll(){
-    const sections = document.querySelectorAll('section');
-    const trigger = window.innerHeight * 0.85;
-    sections.forEach(section=>{
-      if(section.getBoundingClientRect().top<trigger){
-        section.classList.add('visible');
-        section.querySelectorAll('li').forEach((li,i)=>{
-          setTimeout(()=>li.classList.add('visible'), i*150);
-        });
-      }
-    });
-  }
-  window.addEventListener('scroll', showOnScroll);
-  window.addEventListener('load', showOnScroll);
-
-  function downloadPDF(){
-    document.querySelectorAll('.particle, .snake-cursor').forEach(el=>el.style.display='none');
-    const element = document.getElementById('resumeContent');
-    html2pdf().set({
-      margin:0.5, 
-      filename:'趙氏花_履歷表.pdf', 
-      image:{type:'jpeg', quality:0.98}, 
-      html2canvas:{scale:2}, 
-      jsPDF:{unit:'in', format:'a4', orientation:'portrait'}
-    }).from(element).save().finally(()=>{
-      document.querySelectorAll('.particle, .snake-cursor').forEach(el=>el.style.display='block');
-    });
-  }
-
-  const snake = document.getElementById('snake');
-  document.addEventListener('mousemove', e=>{
-    snake.style.transform=`translate(${e.clientX}px,${e.clientY}px)`;
-    createTail(e.clientX, e.clientY);
-  });
-
-  function createTail(x,y){
-    const tail = document.createElement('div');
-    tail.className='snake-tail';
-    tail.style.width = tail.style.height = (Math.random()*6+4)+'px';
-    tail.style.background='rgba(255,255,0,0.5)';
-    tail.style.top=y+'px';
-    tail.style.left=x+'px';
-    document.body.appendChild(tail);
-    setTimeout(()=>tail.remove(),400);
-  }
-
-  for(let i=0;i<50;i++){
-    const p = document.createElement('div');
-    p.className='particle';
-    p.style.top=Math.random()*window.innerHeight+'px';
-    p.style.left=Math.random()*window.innerWidth+'px';
-    const size = Math.random()*5+3;
-    p.style.width = p.style.height = size+'px';
-    p.style.background = `rgba(255,255,255,${Math.random()*0.5+0.3})`;
-    document.body.appendChild(p);
-  }
-
-  // 音樂播放控制
-  const musicBtn = document.getElementById('musicBtn');
-  const bgMusic = document.getElementById('bgMusic');
-  let isPlaying = false;
-  musicBtn.addEventListener('click', ()=>{
-    if(!isPlaying){
-      bgMusic.volume = 0;
-      bgMusic.play();
-      let fadeIn = setInterval(()=>{
-        if(bgMusic.volume<0.5){bgMusic.volume+=0.01;}else{clearInterval(fadeIn);}
-      },100);
-      musicBtn.textContent = "🎵 音樂播放中";
-      isPlaying=true;
-    }else{
-      let fadeOut = setInterval(()=>{
-        if(bgMusic.volume>0){bgMusic.volume-=0.01;}else{bgMusic.pause(); clearInterval(fadeOut);}
-      },100);
-      musicBtn.textContent = "🎵 播放音樂";
-      isPlaying=false;
+function showOnScroll(){
+  const sections = document.querySelectorAll('section');
+  const trigger = window.innerHeight * 0.85;
+  sections.forEach(section=>{
+    if(section.getBoundingClientRect().top<trigger){
+      section.classList.add('visible');
+      section.querySelectorAll('li').forEach((li,i)=>{
+        setTimeout(()=>li.classList.add('visible'), i*150);
+      });
     }
   });
+}
+window.addEventListener('scroll', showOnScroll);
+window.addEventListener('load', showOnScroll);
+
+function downloadPDF(){
+  document.querySelectorAll('.particle, .snake-cursor, .heart').forEach(el=>el.style.display='none');
+  const element = document.getElementById('resumeContent');
+  html2pdf().set({
+    margin:0.5, 
+    filename:'趙氏花_履歷表.pdf', 
+    image:{type:'jpeg', quality:0.98}, 
+    html2canvas:{scale:2}, 
+    jsPDF:{unit:'in', format:'a4', orientation:'portrait'}
+  }).from(element).save().finally(()=>{
+    document.querySelectorAll('.particle, .snake-cursor, .heart').forEach(el=>el.style.display='block');
+  });
+}
+
+// 小蛇跟隨滑鼠
+const snake = document.getElementById('snake');
+document.addEventListener('mousemove', e=>{
+  snake.style.transform=`translate(${e.clientX}px,${e.clientY}px)`;
+  createTail(e.clientX, e.clientY);
+});
+
+function createTail(x,y){
+  const tail = document.createElement('div');
+  tail.className='snake-tail';
+  tail.style.width = tail.style.height = (Math.random()*6+4)+'px';
+  tail.style.background='rgba(255,255,0,0.5)';
+  tail.style.top=y+'px';
+  tail.style.left=x+'px';
+  document.body.appendChild(tail);
+  setTimeout(()=>tail.remove(),400);
+}
+
+// 背景粒子
+for(let i=0;i<50;i++){
+  const p = document.createElement('div');
+  p.className='particle';
+  p.style.top=Math.random()*window.innerHeight+'px';
+  p.style.left=Math.random()*window.innerWidth+'px';
+  const size = Math.random()*5+3;
+  p.style.width = p.style.height = size+'px';
+  p.style.background = `rgba(255,255,255,${Math.random()*0.5+0.3})`;
+  document.body.appendChild(p);
+}
+
+// 背景愛心
+function createHearts(num=30){
+  for(let i=0;i<num;i++){
+    const heart = document.createElement('div');
+    heart.className='heart';
+    heart.style.left = Math.random()*window.innerWidth+'px';
+    heart.style.top = (window.innerHeight + Math.random()*200)+'px';
+    heart.style.width = heart.style.height = (10 + Math.random()*20)+'px';
+    heart.style.animationDuration = (5 + Math.random()*5)+'s';
+    heart.style.animationDelay = Math.random()*5+'s';
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(), 10000);
+  }
+}
+setInterval(()=>{ createHearts(5); }, 800);
+
+// 音樂播放控制
+const musicBtn = document.getElementById('musicBtn');
+const bgMusic = document.getElementById('bgMusic');
+let isPlaying = false;
+musicBtn.addEventListener('click', ()=>{
+  if(!isPlaying){
+    bgMusic.volume = 0;
+    bgMusic.play();
+    let fadeIn = setInterval(()=>{
+      if(bgMusic.volume<0.5){bgMusic.volume+=0.01;}else{clearInterval(fadeIn);}
+    },100);
+    musicBtn.textContent = "🎵 音樂播放中";
+    isPlaying=true;
+  }else{
+    let fadeOut = setInterval(()=>{
+      if(bgMusic.volume>0){bgMusic.volume-=0.01;}else{bgMusic.pause(); clearInterval(fadeOut);}
+    },100);
+    musicBtn.textContent = "🎵 播放音樂";
+    isPlaying=false;
+  }
+});
 </script>
 </body>
 </html>
-
