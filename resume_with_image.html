@@ -5,163 +5,65 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>趙氏花 履歷表 | 自我介紹與專長展示</title>
 <style>
-  /* ----------------------- 全域 ----------------------- */
-  body, html {
-    margin: 0;
-    padding: 0;
-    font-family: "Microsoft JhengHei", Arial, sans-serif;
-    background: linear-gradient(135deg, #a8edea, #fed6e3);
-    overflow-x: hidden;
-  }
-  /* ----------------------- 粒子背景 ----------------------- */
-  .particle, .snake-tail {
-    position: absolute;
-    border-radius: 50%;
-    pointer-events: none;
-  }
-  .particle {
-    width: 5px; height: 5px;
-    background: rgba(255,255,255,0.7);
-    animation: float 20s linear infinite;
-  }
-  @keyframes float {
-    0% {transform: translateY(0) translateX(0);}
-    100% {transform: translateY(-1200px) translateX(1200px);}
-  }
-  /* ----------------------- 容器 ----------------------- */
-  .resume-container {
-    display: flex;
-    flex-wrap: wrap;
-    max-width: 1000px;
-    margin: 60px auto;
-    background: rgba(255,255,255,0.95);
-    border-radius: 16px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
-    overflow: hidden;
-    position: relative;
-    z-index: 1;
-    transform: translateY(-50px);
-    opacity: 0;
-    animation: fadeInContainer 1s forwards;
-  }
-  @keyframes fadeInContainer {
-    to {opacity:1; transform:translateY(0);}
-  }
-  /* ----------------------- 左側資訊 ----------------------- */
-  .left-side {
-    flex: 1;
-    min-width: 280px;
-    background: linear-gradient(180deg, #4facfe, #00f2fe);
-    color: white;
-    padding: 50px 20px;
-    text-align: center;
-    position: relative;
-  }
-  .left-side h1 {
-    font-size: 2em;
-    margin: 10px 0;
-    text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
-    animation: textSlide 1s ease forwards;
-    opacity: 0;
-  }
-  .left-side p {
-    margin: 5px 0;
-    opacity: 0;
-    animation: textSlide 1s ease forwards;
-    animation-delay: 0.3s;
-  }
-  @keyframes textSlide {
-    from {opacity:0; transform: translateY(20px);}
-    to {opacity:1; transform: translateY(0);}
-  }
-  /* ----------------------- 右側內容 ----------------------- */
-  .right-side {
-    flex: 2;
-    min-width: 500px;
-    padding: 40px;
-  }
-  section {
-    background: #fff;
-    border-radius: 14px;
-    padding: 25px;
-    margin-bottom: 25px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    transition: transform 0.6s, opacity 0.6s;
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  section.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  section h2 {
-    color: #4facfe;
-    font-size: 1.6em;
-    margin-bottom: 15px;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: text-shadow 0.3s;
-  }
-  section h2:hover {text-shadow: 0 0 10px #4facfe;}
-  section h2::after {
-    content: "▼";
-    font-size: 0.9em;
-    transition: transform 0.3s;
-  }
-  section h2.active::after {transform: rotate(-180deg);}
-  ul {padding-left:20px;margin:0;}
-  ul li {
-    padding: 10px 12px;
-    margin-bottom:8px;
-    border-radius:10px;
-    font-size:1.05em;
-    background:#f7f7f7;
-    transition: all 0.3s ease, box-shadow 0.3s;
-    opacity:0;
-  }
-  ul li.visible {
-    animation: liFade 0.6s forwards, liGlow 0.4s 1;
-  }
-  @keyframes liFade {0%{opacity:0; transform:translateY(15px);} 100%{opacity:1; transform:translateY(0);}}
-  @keyframes liGlow {0%,100%{box-shadow:0 0 0px #fff;}50%{box-shadow:0 0 15px #ffd700;}}
-  ul li:hover {transform: scale(1.08) rotate(1deg); background:#ffe0b2; color:#e65100; box-shadow:0 0 10px #ffd700;}
-  ul li img {display:block;margin-top:6px;border-radius:8px; transition:transform 0.3s;}
-  ul li img:hover {transform: scale(1.2) rotate(5deg);}
-  .download-btn {
-    display:inline-block;
-    margin:20px 0 30px 0;
-    padding:12px 25px;
-    background:#4facfe;
-    color:white;
-    font-size:1.1em;
-    border:none;
-    border-radius:10px;
-    cursor:pointer;
-    transition: all 0.3s;
-  }
-  .download-btn:hover {background:#0288d1; box-shadow:0 0 15px rgba(0,0,0,0.3);}
-  footer {text-align:center; padding:20px; background:#333; color:white; margin-top:50px;}
-  .intro-section {display: flex; align-items: flex-start; gap: 20px;}
-  .intro-photo {width: 180px; height: 180px; border-radius: 12px; object-fit: cover; border: 3px solid #4facfe; transition: transform 0.5s;}
-  .intro-photo:hover {transform: scale(1.05) rotate(2deg);}
-  .snake-cursor {position: fixed; width: 35px; height: 35px; pointer-events: none; background-image: url('https://media.giphy.com/media/3o7abldj0tZtFjZ7rm/giphy.gif'); background-size: cover; z-index:9999; transform: translate(-50%,-50%);}
-  /* ----------------------- 手機版優化 ----------------------- */
-  @media(max-width:800px) {
-    .resume-container {flex-direction: column; padding: 20px 10px;}
-    .left-side, .right-side {min-width: 100%; padding: 30px 15px;}
-    .left-side h1 {font-size: 1.8em;}
-    .left-side p {font-size: 0.95em;}
-    section {padding: 20px 15px;}
-    section h2 {font-size: 1.4em;}
-    ul li {font-size: 0.95em; padding: 8px 10px;}
-    .intro-photo {width: 140px; height: 140px;}
-    .download-btn {padding: 10px 20px; font-size: 1em;}
-  }
+/* ------------------- 全域 ------------------- */
+body, html{margin:0;padding:0;font-family:"Microsoft JhengHei",Arial,sans-serif;overflow-x:hidden;background:linear-gradient(135deg,#ff9a9e,#fad0c4,#a18cd1,#fbc2eb,#8fd3f4,#a6c0fe,#84fab0,#cfd9df);}
+.particle,.snake-tail,.heart,.pet-snake{position:absolute;border-radius:50%;pointer-events:none;}
+.particle{width:5px;height:5px;background:rgba(255,255,255,0.7);animation:float 20s linear infinite;}
+@keyframes float{0%{transform:translateY(0) translateX(0);}100%{transform:translateY(-1200px) translateX(1200px);}}
+.snake-cursor{position:fixed;width:35px;height:35px;pointer-events:none;background-image:url('https://media.giphy.com/media/3o7abldj0tZtFjZ7rm/giphy.gif');background-size:cover;z-index:9999;transform:translate(-50%,-50%);}
+.pet-snake{width:50px;height:50px;background-image:url('https://media.giphy.com/media/3o7abldj0tZtFjZ7rm/giphy.gif');background-size:cover;z-index:9998;pointer-events:none;transition:top 0.05s linear,left 0.05s linear;}
+.heart{font-size:20px;}
+.resume-container{display:flex;flex-wrap:wrap;max-width:1000px;margin:60px auto;background:rgba(255,255,255,0.95);border-radius:16px;box-shadow:0 20px 50px rgba(0,0,0,0.2);overflow:hidden;position:relative;z-index:1;transform:translateY(-50px);opacity:0;animation:fadeInContainer 1s forwards;}
+@keyframes fadeInContainer{to{opacity:1;transform:translateY(0);}}
+.left-side{flex:1;min-width:280px;background:linear-gradient(180deg,#4caf50,#81c784);color:white;padding:50px 20px;text-align:center;position:relative;}
+.left-side h1{font-size:2em;margin:10px 0;text-shadow:2px 2px 10px rgba(0,0,0,0.3);animation:textSlide 1s ease forwards;opacity:0;}
+.left-side p{margin:5px 0;opacity:0;animation:textSlide 1s ease forwards;animation-delay:0.3s;}
+@keyframes textSlide{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+.right-side{flex:2;min-width:500px;padding:40px;}
+section{background:#fff;border-radius:14px;padding:25px;margin-bottom:25px;box-shadow:0 10px 30px rgba(0,0,0,0.1);transition:transform 0.6s,opacity 0.6s;opacity:0;transform:translateY(40px);}
+section.visible{opacity:1;transform:translateY(0);}
+section h2{color:#4caf50;font-size:1.6em;margin-bottom:15px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:text-shadow 0.3s;}
+section h2:hover{text-shadow:0 0 10px #4caf50;}
+section h2::after{content:"▼";font-size:0.9em;transition:transform 0.3s;}
+section h2.active::after{transform:rotate(-180deg);}
+ul{padding-left:20px;margin:0;}
+ul li{padding:10px 12px;margin-bottom:8px;border-radius:10px;font-size:1.05em;background:#f7f7f7;transition: all 0.3s ease, box-shadow 0.3s;opacity:0;}
+ul li.visible{animation: liFade 0.6s forwards, liGlow 0.4s 1;}
+@keyframes liFade{0%{opacity:0;transform:translateY(15px);}100%{opacity:1;transform:translateY(0);}}
+@keyframes liGlow{0%,100%{box-shadow:0 0 0px #fff;}50%{box-shadow:0 0 15px #ffd700;}}
+ul li:hover{transform: scale(1.08) rotate(1deg); background:#ffe0b2; color:#e65100; box-shadow:0 0 10px #ffd700;}
+.intro-section{display:flex;align-items:flex-start;gap:20px;}
+.intro-photo{width:180px;height:180px;border-radius:12px;object-fit:cover;border:3px solid #4caf50;transition:transform 0.5s;}
+.intro-photo:hover{transform:scale(1.05) rotate(2deg);}
+.intro-text{flex:1;}
+.download-btn{display:inline-block;margin:20px 0 30px 0;padding:12px 25px;background:#4caf50;color:white;font-size:1.1em;border:none;border-radius:10px;cursor:pointer;transition:all 0.3s;}
+.download-btn:hover{background:#388e3c;box-shadow:0 0 15px rgba(0,0,0,0.3);}
+footer{text-align:center;padding:20px;background:#333;color:white;margin-top:50px;}
+@media(max-width:800px){.resume-container{flex-direction:column;}.left-side,.right-side{min-width:100%;}}
 </style>
 </head>
 <body>
+
+<!-- 音樂控制 -->
+<audio id="bg-music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop></audio>
+<button id="playMusicBtn" style="
+    position:fixed;
+    top:20px;
+    left:50%;
+    transform:translateX(-50%);
+    z-index:10000;
+    padding:15px 25px;
+    font-size:1.2em;
+    background:#ff69b4;
+    color:white;
+    border:none;
+    border-radius:12px;
+    box-shadow:0 0 15px rgba(255,105,180,0.7);
+    cursor:pointer;
+">
+  播放夢幻音樂
+</button>
+
 <div style="text-align:center;">
   <button class="download-btn" onclick="downloadPDF()">下載 PDF 履歷表</button>
 </div>
@@ -174,8 +76,8 @@
     <p>學號：U114011116</p>
     <p>📍 台中市，台灣</p>
   </div>
-
   <div class="right-side">
+    <!-- 自我介紹 -->
     <section>
       <h2 onclick="toggleContent(this)">👋 自我介紹</h2>
       <div class="content">
@@ -184,12 +86,13 @@
           <div class="intro-text">
             <p>您好！我是趙氏花，就讀於亞洲大學健康產業管理系，預計2028年畢業。</p>
             <p>我熱愛健康產業領域，同時對廚藝、舞蹈充滿熱情，具備良好的團隊合作能力與學習動力，期待在健康管理、活動策劃等領域發揮所長。</p>
-            <p>閒暇時我喜歡探索新菜式、參與舞蹈表演，也熱衷於透過實踐提升自身技能，歡迎您進一步了解我的經歷！</p>
+            <p>閒暇時我喜歡探索新菜式、參與舞蹈表演，也熱衷於透過實踐提升自身技能。</p>
           </div>
         </div>
       </div>
     </section>
 
+    <!-- 學歷 -->
     <section>
       <h2 onclick="toggleContent(this)">🎓 學歷背景</h2>
       <div class="content">
@@ -197,6 +100,7 @@
       </div>
     </section>
 
+    <!-- 技能專長 -->
     <section>
       <h2 onclick="toggleContent(this)">💡 技能專長</h2>
       <div class="content">
@@ -208,13 +112,14 @@
       </div>
     </section>
 
+    <!-- 興趣愛好 -->
     <section>
       <h2 onclick="toggleContent(this)">🎶 興趣愛好</h2>
       <div class="content">
         <ul>
           <li>🎵 參與校內外音樂與舞蹈表演活動</li>
           <li>🍲 熱衷於烹飪，喜歡嘗試新菜式</li>
-          <li>💖 最喜歡美式男孩（男朋友）</li>
+          <li>🇺🇸 最喜歡美式男孩（男友）</li>
           <li>🍔 很喜歡吃東西</li>
           <li>😴 很喜歡睡覺</li>
           <li>🐍 最愛蛇</li>
@@ -223,6 +128,7 @@
       </div>
     </section>
 
+    <!-- 工作經驗 -->
     <section>
       <h2 onclick="toggleContent(this)">💼 工作經驗</h2>
       <div class="content">
@@ -230,14 +136,16 @@
       </div>
     </section>
 
+    <!-- 職涯目標 -->
     <section>
       <h2 onclick="toggleContent(this)">🎯 職涯目標</h2>
       <div class="content">
-        <p>短期目標： 在餐飲、服飾及服務業中持續累積經驗。</p>
-        <p>長期目標： 賺夠錢後，與男友一起回越南開店。</p>
+        <p>短期目標：在餐飲、服飾及服務業中持續累積經驗。</p>
+        <p>長期目標：賺夠錢後，與男友一起回越南開店。</p>
       </div>
     </section>
 
+    <!-- 語言能力 -->
     <section>
       <h2 onclick="toggleContent(this)">🌐 語言能力</h2>
       <div class="content">
@@ -249,15 +157,15 @@
       </div>
     </section>
 
+    <!-- 個性與座右銘 -->
     <section>
-      <h2 onclick="toggleContent(this)">✨ 個性特質</h2>
+      <h2 onclick="toggleContent(this)">✨ 個性與座右銘</h2>
       <div class="content">
-        <ul>
-          <li>很活潑俏皮</li>
-          <li>沒事找男友，有事也找男友</li>
-        </ul>
+        <p>個性：活潑俏皮</p>
+        <p>座右銘：沒事找男友，有事也找男友</p>
       </div>
     </section>
+
   </div>
 </div>
 
@@ -266,69 +174,102 @@
 </footer>
 
 <div class="snake-cursor" id="snake"></div>
+<div class="pet-snake" id="petSnake"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script>
-  function toggleContent(header){
-    header.classList.toggle('active');
-  }
+function toggleContent(header){header.classList.toggle('active');}
 
-  function showOnScroll(){
-    const sections = document.querySelectorAll('section');
-    const trigger = window.innerHeight * 0.85;
-    sections.forEach(section=>{
-      if(section.getBoundingClientRect().top<trigger){
-        section.classList.add('visible');
-        section.querySelectorAll('li').forEach((li,i)=>{
-          setTimeout(()=>li.classList.add('visible'), i*150);
-        });
-      }
-    });
-  }
-  window.addEventListener('scroll', showOnScroll);
-  window.addEventListener('load', showOnScroll);
-
-  function downloadPDF(){
-    document.querySelectorAll('.particle, .snake-cursor').forEach(el=>el.style.display='none');
-    const element = document.getElementById('resumeContent');
-    html2pdf().set({
-      margin:0.5, 
-      filename:'趙氏花_履歷表.pdf', 
-      image:{type:'jpeg', quality:0.98}, 
-      html2canvas:{scale:2}, 
-      jsPDF:{unit:'in', format:'a4', orientation:'portrait'}
-    }).from(element).save().finally(()=>{
-      document.querySelectorAll('.particle, .snake-cursor').forEach(el=>el.style.display='block');
-    });
-  }
-
-  const snake = document.getElementById('snake');
-  document.addEventListener('mousemove', e=>{
-    snake.style.transform=`translate(${e.clientX}px,${e.clientY}px)`;
-    createTail(e.clientX, e.clientY);
+function showOnScroll(){
+  const sections = document.querySelectorAll('section');
+  const trigger = window.innerHeight*0.85;
+  sections.forEach(section=>{
+    if(section.getBoundingClientRect().top<trigger){
+      section.classList.add('visible');
+      section.querySelectorAll('li').forEach((li,i)=>setTimeout(()=>li.classList.add('visible'),i*150));
+    }
   });
+}
+window.addEventListener('scroll',showOnScroll);
+window.addEventListener('load',showOnScroll);
 
-  function createTail(x,y){
-    const tail = document.createElement('div');
-    tail.className='snake-tail';
-    tail.style.width = tail.style.height = (Math.random()*6+4)+'px';
-    tail.style.background='rgba(255,255,0,0.5)';
-    tail.style.top=y+'px';
-    tail.style.left=x+'px';
-    document.body.appendChild(tail);
-    setTimeout(()=>tail.remove(),400);
-  }
+function downloadPDF(){
+  document.querySelectorAll('.particle,.snake-cursor,.pet-snake,.heart').forEach(el=>el.style.display='none');
+  html2pdf().set({margin:0.5,filename:'趙氏花_履歷表.pdf',image:{type:'jpeg',quality:0.98},html2canvas:{scale:2},jsPDF:{unit:'in',format:'a4',orientation:'portrait'}}).from(document.getElementById('resumeContent')).save().finally(()=>{document.querySelectorAll('.particle,.snake-cursor,.pet-snake,.heart').forEach(el=>el.style.display='block');});
+}
 
-  for(let i=0;i<50;i++){
-    const p = document.createElement('div');
-    p.className='particle';
-    p.style.top=Math.random()*window.innerHeight+'px';
-    p.style.left=Math.random()*window.innerWidth+'px';
-    const size = Math.random()*5+3;
-    p.style.width = p.style.height = size+'px';
-    p.style.background = `rgba(255,255,255,${Math.random()*0.5+0.3})`;
-    document.body.appendChild(p);
+// -------------------- 小蛇 --------------------
+const snake=document.getElementById('snake');
+document.addEventListener('mousemove',e=>{snake.style.transform=`translate(${e.clientX}px,${e.clientY}px)`;createTail(e.clientX,e.clientY);});
+function createTail(x,y){
+  const tail=document.createElement('div');
+  tail.className='snake-tail';
+  tail.style.width=tail.style.height=(Math.random()*6+4)+'px';
+  tail.style.background='rgba(255,255,0,0.5)';
+  tail.style.top=y+'px';
+  tail.style.left=x+'px';
+  document.body.appendChild(tail);
+  setTimeout(()=>tail.remove(),400);
+}
+
+// -------------------- 愛心 --------------------
+setInterval(()=>{
+  const heart=document.createElement('div');
+  heart.className='heart';
+  heart.innerText='❤️';
+  heart.style.left=Math.random()*window.innerWidth+'px';
+  heart.style.top=window.innerHeight+'px';
+  heart.style.opacity=Math.random()*0.8+0.2;
+  document.body.appendChild(heart);
+  let top=window.innerHeight;
+  const id=setInterval(()=>{
+    top-=2;
+    heart.style.top=top+'px';
+    if(top<0){heart.remove();clearInterval(id);}
+  },30);
+},400);
+
+// -------------------- 流光小蛇 --------------------
+const petSnake=document.getElementById('petSnake');
+let px=100,py=100;
+function movePetSnake(){
+  px+=Math.random()*20-10;
+  py+=Math.random()*20-10;
+  if(px<0) px=0; if(px>window.innerWidth-50) px=window.innerWidth-50;
+  if(py<0) py=0; if(py>window.innerHeight-50) py=window.innerHeight-50;
+  petSnake.style.left=px+'px';
+  petSnake.style.top=py+'px';
+}
+setInterval(movePetSnake,100);
+
+// -------------------- 彩虹粒子 --------------------
+for(let i=0;i<80;i++){
+  const p=document.createElement('div');
+  p.className='particle';
+  p.style.top=Math.random()*window.innerHeight+'px';
+  p.style.left=Math.random()*window.innerWidth+'px';
+  const size=Math.random()*6+3;
+  p.style.width=p.style.height=size+'px';
+  const colors=['#ff9a9e','#fad0c4','#a18cd1','#fbc2eb','#8fd3f4','#a6c0fe','#84fab0','#cfd9df'];
+  p.style.background=colors[Math.floor(Math.random()*colors.length)];
+  document.body.appendChild(p);
+}
+
+// -------------------- 音樂控制 --------------------
+const bgMusic=document.getElementById('bg-music');
+const playBtn=document.getElementById('playMusicBtn');
+window.addEventListener('load',()=>{
+  const playPromise=bgMusic.play();
+  if(playPromise!==undefined){
+    playPromise.catch(error=>{
+      playBtn.style.display='block';
+    });
   }
+});
+playBtn.addEventListener('click',()=>{
+  if(bgMusic.paused){bgMusic.play(); playBtn.innerText='暫停音樂';}
+  else{bgMusic.pause(); playBtn.innerText='播放夢幻音樂';}
+});
 </script>
 </body>
 </html>
